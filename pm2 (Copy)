@@ -1,2 +1,0 @@
-pm2 start dev.config.cjs
-pm2 delete dev.config.cjs
