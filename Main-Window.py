@@ -7,6 +7,7 @@ import random
 
 from math import pi, atan
 
+## characters
 from pathlib import PosixPath
 import importlib
 import importlib.util
@@ -23,12 +24,35 @@ def loadFunctionByName(moduleName, filePath, functionName):
 	module = importFromPath(moduleName, filePath)
 	return getattr(module, functionName)
 
-# characters
+# assigning
 characters = {}
 for fi in list(PosixPath("characters").iterdir()):
 	name = str(fi).split("/")[-1]
 	characters[fi] = loadFunctionByName("classDef", f"characters/{name}/classDef.py", "Class")
-#
+##
+
+
+def characterMovement(character, velocity=None, radius=None):
+
+	if velocity == None:
+		try:
+			vel = character.velocity
+		except AttributeError:
+			vel = [0, 0]
+	else:
+		vel = velocity
+	
+	if radius == None:
+		try:
+			r = character.getCollisionRadius()
+		except AttributeError:
+			r = 1
+	else:
+		r = radius
+	
+	
+	def shit():
+		
 
 
 
@@ -82,6 +106,18 @@ def findDirection(velocities):
 
 
 
+# setup
+def setup(charList):
+	toReturn
+	for char in charList:
+		try:
+			toReturn.append(characters[char])
+		except IndexError:
+			print(f"no character in characters named {char}")
+	
+	return toReturn
+
+playing = setup(["DIO"])
 
 
 
@@ -89,17 +125,34 @@ def findDirection(velocities):
 
 
 
+
+
+
+
+currentFrame = 0
 ###############
 #  main loop  #
 ###############
 while True:
 
+	for event in pygame.event.get():
+		if event.type == pygame.QUIT:
+			quit()
+	
+	currentFrame += 1
+
 	# calcs n shit
+	if currentFrame == 1:
+		for char in playing:
+			char.startMovin()
 
 
 
 	# rendering
 	screen.fill("lavender")
+
+	for char in playing:
+		char.draw()
 
 
 
