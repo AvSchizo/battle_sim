@@ -18,6 +18,8 @@ class Class():
 			"timestop": 0,
 			"knife": 0,
 		}
+
+		self.startMovin()
 	
 
 
@@ -27,9 +29,23 @@ class Class():
 	
 
 
+	def getCollisionRadius(self):
+		
+		if self.action == "idle":
+			return 5
+	
+
+
+	def getSprite(self):
+		
+		if self.action == "idle":
+			return self.sprites["idle"]
+	
+
+
 	def createSprites(returning=False):
 
-		sprites = {}
+		sp = {}
 
 		# idle
 		toAdd = []
@@ -39,11 +55,27 @@ class Class():
 		off = [0, 0]
 		toAdd.append([img, off])
 		##
-		sprites["idle"] = toAdd
+		sp["idle"] = toAdd
 		#
 
 
 		if returning:
-			return sprites
+			return sp
 		else:
-			self.sprites = sprites
+			self.sprites = sp
+	
+
+
+	def startMovin(self, dir=None, speed=10, returning=False):
+		if dir == None:
+			direction = random.randint(0, 359)*pi/180
+		else:
+			direction = dir
+		
+		thisList = [cos(direction), sin(direction)]
+		
+		if returning:
+			return thisList
+		else:
+			for i in range(2):
+				self.velocity[i] = thisList[i]
